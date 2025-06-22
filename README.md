@@ -1,9 +1,14 @@
+Just some scratch notes for me 
 ```bash
+#local dev 
+hugo server #to start local render of webpage 
+
+#simple git commands 
 git add. 
 git commit -m "xyz"
 git push
 
-#in branch 
+#if in branch
 git status
 git add .
 git commit -m "branch"

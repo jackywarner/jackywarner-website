@@ -11,18 +11,26 @@
 # ordered by weight from lowest to highest.
 
 [[main]]
+  name = "About"
+  pageRef = "about"
+  weight = 10
+
+[[main]]
   name = "Cloud"
-  pageRef = "posts"
+  parent = "Blog"
+  pageRef = "blog/cloud"
   weight = 10
 
 [[main]]
   name = "Cyber"
-  pageRef = "posts"
+  parent = "Blog"
+  pageRef = "cyber"
   weight = 10
 
 [[main]]
   name = "Thoughts"
-  pageRef = "posts"
+  parent = "Blog"
+  pageRef = "thoughts"
   weight = 10
 
 #[[main]]
@@ -68,10 +76,10 @@
 # the copyright notice. Configure as per the main menu above.
 
 
-# [[footer]]
-#   name = "Tags"
-#   pageRef = "tags"
-#   weight = 10
+ [[footer]]
+   name = "Tags"
+   pageRef = "tags"
+   weight = 10
 
 # [[footer]]
 #   name = "Categories"

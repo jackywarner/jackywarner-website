@@ -24,14 +24,14 @@
 [[main]]
   name = "Cyber"
   parent = "Blog"
-  pageRef = "cyber"
+  pageRef = "blog/cyber"
   weight = 10
 
-[[main]]
-  name = "Thoughts"
-  parent = "Blog"
-  pageRef = "thoughts"
-  weight = 10
+# [[main]]
+#   name = "Thoughts"
+#   parent = "Blog"
+#   pageRef = "thoughts"
+#   weight = 10
 
 #[[main]]
 #  name = "Parent"

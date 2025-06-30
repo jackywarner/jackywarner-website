@@ -1,7 +1,7 @@
 ---
 title: "My second post"
 date: 2025-06-20
-draft: false
+draft: true
 summary: "This is my second post on my site"
 tags: ["space"]
 ---

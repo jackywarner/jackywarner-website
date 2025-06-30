@@ -18,4 +18,8 @@ git merge jwarner
 git push origin main
 git branch -d jwarner
 git push origin --delete jwarner 
+
+# if local is broken
+git rm -r --cached themes/blowfish
+git submodule add -b main https://github.com/nunocoracao/blowfish.git themes/blowfish
 ```

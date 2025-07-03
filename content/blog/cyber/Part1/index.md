@@ -121,5 +121,39 @@ services:
     ports:
       - 80:80
 ```
+```bash
+docker-compose up -d
+```
+## Step 5: Connect Domain with Cloudflare 
+### 5.1 Add your Domain To Cloudflare
+- Go to <a href="https://dash.cloudflare.com/" style="color: green; font-weight: bold;">Cloudflare Dashboard</a>.
+- Add your domain and change your registrar's nameservers to Cloudflare's 
 
+### 5.2 Create A Record
+- Go to DNS > Add Record:
+- Type: A
+- Name: vault (ie. vault.yourdomain.com)
+- Conect: Your home's public IP
+- TTL: Auto
+- Proxy: Enabled 
 
+## Step 6: Configure Port Forwarding 
+- In your router settings:
+  - Forward port 80 and 443 to your Pi's IP 
+
+## Step 7: Use Nginx Proxy Manager to Set SSL
+- Go to NPM UI https://<pi-ip>:81
+- Click Proxy Hosts > Add Proxy Host
+  - Domain: vault.yourdomain.com
+  - Forward Hostanme/IP: vaultwarden
+  - Forward Port: 80
+  - Block common Exploits: on
+  - Websockets: on
+- SSL Tab:
+  - Request SSL Certificate (Let's Encrypt)
+  - Force SSL: on 
+- Save
+
+## Step 8: Test
+- Go to https://vault.yourdomain.com 
+- You should see the Vaultwarden login page secured with HTTPS! 

